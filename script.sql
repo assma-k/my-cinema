@@ -1,3 +1,4 @@
+-- Active: 1769609459616@@127.0.0.1@3306@cinema
 create DATABASE cinema;
 use cinema;
 
