@@ -4,24 +4,24 @@ use cinema;
 
 create TABLE movies (
     id int  AUTO_INCREMENT PRIMARY KEY,
-    title varchar not null,
+    title varchar(300) not null,
     description text,
     duration int,
     release_year int not null,
-    genre varchar,
-    director varchar,
+    genre varchar(100),
+    director varchar(100),
     create_at datetime,
     update_at datetime
 );
 
 create TABLE rooms (
     id int AUTO_INCREMENT PRIMARY KEY,
-    name varchar not null,
+    name varchar(200) not null,
     capacity int not null,
-    type varchar,
+    type varchar(100),
   active boolean ,
   created_at datetime,
-  updated_at datetime,
+  updated_at datetime
 );
 
 CREATE TABLE screenings (
