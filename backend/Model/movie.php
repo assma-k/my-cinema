@@ -18,9 +18,9 @@ class movie {
       return $result->fetch(PDO::FETCH_ASSOC);
    }
    public function addMovie($title, $description, $duration, $release_year, $genre, $director){
-      $sql="INSERT INTO movie (title, description, duration, release_year, genre, director) VALUE (?, ?, ?, ?, ?, ?) ";
+      $sql="INSERT INTO movies (title, description, duration, release_year, genre, director) VALUES (?, ?, ?, ?, ?, ?) ";
       $result=$this->db->prepare($sql);
-      return $result->execute([$title, $description, $duration, $release_year, $genre, $director]);
+      $result->execute([$title, $description, $duration, $release_year, $genre, $director]);
       return $this->db->lastInsertId();
    }
 }
