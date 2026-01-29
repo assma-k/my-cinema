@@ -13,7 +13,7 @@ class Databases
 
             try {
                 $this->pdo = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
-                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);// set msg si erreur grace exception
+                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // set msg si erreur grace exception
                 echo "Connection reussie";
             } catch (PDOException $e) {
                 echo "Connection raté: " . $e->getMessage();
