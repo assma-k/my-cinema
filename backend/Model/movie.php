@@ -23,4 +23,9 @@ class movie {
       $result->execute([$title, $description, $duration, $release_year, $genre, $director]);
       return $this->db->lastInsertId();
    }
+   public function deleteMovie($id){
+      $sql="DELETE FROM movies WHERE id = ?";
+      $result=$this->db->prepare($sql);
+      return $result->execute([$id]);
+   }
 }
