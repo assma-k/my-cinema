@@ -6,5 +6,7 @@ $base = new Databases();
 $db= $base->Connexion();
 
 $movie = new movie($db);
-$fil=$movie->film();
+$fil=$movie->film(1);
+echo "<pre>";
 print_r($fil);
+echo "</pre>";
