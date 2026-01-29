@@ -28,4 +28,11 @@ class movie {
       $result=$this->db->prepare($sql);
       return $result->execute([$id]);
    }
+
+   public function uploadMovie($title, $description, $duration, $release_year, $genre, $director, $id){
+      $sql="UPDATE movies SET title = ?, description = ?, duration = ?, release_year = ?, genre = ?, director = ? WHERE id = ?";
+      $result=$this->db->prepare($sql);
+       $result->execute([$title, $description, $duration, $release_year, $genre, $director, $id]);
+       return $result;
+   }
 }
