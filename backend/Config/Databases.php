@@ -10,7 +10,7 @@ class Databases
 
             try {
                 $this->config = parse_ini_file(__DIR__."/config.ini");
-                $this->pdo = new PDO("mysql:host={$this->config['servername']};dbname={$this->config['dbname']}", $this->config["user"], $this->config["password"]);
+                $this->pdo = new PDO("mysql:host={$this->config['servername']};dbname={$this->config['dbname']}", $this->config["username"], $this->config["password"]);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // set msg si erreur grace exception
                 echo "Connection reussie";
             } catch (PDOException $e) {
