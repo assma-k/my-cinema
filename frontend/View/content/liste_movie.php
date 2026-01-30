@@ -8,11 +8,7 @@
     <body>
         <section>
             <h1>liste film</h1>
-            <?php
-            foreach($film as $f){
-                
-            }
-            ?>
+            <div id="movie-list"></div>
         </section>
     </body>
 </html>
