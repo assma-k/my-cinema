@@ -1,10 +1,7 @@
 <?php
 class Databases
 {
-    private $servername = "localhost";
-    private $username = "root";
-    private $password = "TonMotDePasseIci";
-    private $dbname = "cinema";
+    private $config;
     private $pdo;
 
     public function Connexion()
@@ -12,7 +9,8 @@ class Databases
         if ($this->pdo === null) {
 
             try {
-                $this->pdo = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
+                $this->config = parse_ini_file(__DIR__."/config.ini");
+                $this->pdo = new PDO("mysql:host={$this->config['servername']};dbname={$this->config['dbname']}", $this->config["user"], $this->config["password"]);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // set msg si erreur grace exception
                 echo "Connection reussie";
             } catch (PDOException $e) {
