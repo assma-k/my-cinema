@@ -1,6 +1,7 @@
 <?php
 require_once("Config/database.php");
 require_once("Model/movie.php");
+require_once("liste_movie.php");
 
 $base = new Databases();
 $db= $base->Connexion();
