@@ -15,7 +15,18 @@ class movieRepository{
       $sql = "SELECT * FROM movies WHERE id = ?";
       $result= $this->db->prepare($sql);
       $result->execute([$id]);
-      return $result->fetch(PDO::FETCH_ASSOC);
+      $row = $result->fetch(PDO::FETCH_ASSOC);
+      $monFilm = new movie();
+      $monFilm->setId($row["id"]);
+      $monFilm->setTitle($row["title"]);
+      $monFilm->setDescription($row["description"]);
+      $monFilm->setDuration($row["duration"]);
+      $monFilm->setReleaseYear($row["release_year"]);
+      $monFilm->setGenre($row["genre"]);
+      $monFilm->setDirector($row["director"]);
+      $monFilm->setCreatedAt($row["created_at"]);
+      $monFilm->setUpdatedAt($row["updated_at"]);
+      return $monFilm;
    }
    public function addMovie($title, $description, $duration, $release_year, $genre, $director){
       $sql="INSERT INTO movies (title, description, duration, release_year, genre, director) VALUES (?, ?, ?, ?, ?, ?) ";

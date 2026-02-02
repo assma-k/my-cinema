@@ -10,5 +10,7 @@
             <h1>liste film</h1>
             <div id="movie-list"></div>
         </section>
+        <script src="movieCard.js"></script>
+        <script src="home.js"></script>
     </body>
 </html>
