@@ -6,6 +6,7 @@ $db= $base->Connexion();
 $movie = new movieRepository($db);
 
 $fil=$movie->idFilm(1);
+header('Content-Type: application/json');
 echo json_encode($fil);
 
 
