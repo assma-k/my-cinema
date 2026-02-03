@@ -46,25 +46,41 @@ class movieRepository
       $monFilm->setUpdatedAt($row["updated_at"]);
       return $monFilm;
    }
-   public function addMovie($title, $description, $duration, $release_year, $genre, $director)
-   {
+   public function addMovie($m){
       $sql = "INSERT INTO movies (title, description, duration, release_year, genre, director) VALUES (?, ?, ?, ?, ?, ?) ";
       $result = $this->db->prepare($sql);
-      $result->execute([$title, $description, $duration, $release_year, $genre, $director]);
-      return $this->db->lastInsertId();
+      
+      $result->execute([
+      $m->getTitle(),
+      $m->getDescription(),
+      $m->getDuration(),
+      $m->getReleaseYear(),
+      $m->getGenre(),
+      $m->getDirector(),
+      ]);
+      $id = $this->db->lastInsertId();
+      $m->setId($id);
+      return $m;
    }
-   public function deleteMovie($id)
+   public function deleteMovie($m)
    {
       $sql = "DELETE FROM movies WHERE id = ?";
       $result = $this->db->prepare($sql);
-      return $result->execute([$id]);
+      return $result->execute([$m->getId()]);
+      return $m;
    }
 
-   public function uploadMovie($title, $description, $duration, $release_year, $genre, $director, $id)
+   public function uploadMovie($m)
    {
       $sql = "UPDATE movies SET title = ?, description = ?, duration = ?, release_year = ?, genre = ?, director = ? WHERE id = ?";
       $result = $this->db->prepare($sql);
-      $result->execute([$title, $description, $duration, $release_year, $genre, $director, $id]);
-      return $result;
+      $result->execute([$m->getTitle(),
+         $m->getDescription(),
+      $m->getDuration(),
+      $m->getReleaseYear(),
+      $m->getGenre(),
+      $m->getDirector(),
+      $m->getId()]);
+      return $m;
    }
 }

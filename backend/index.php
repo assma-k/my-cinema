@@ -9,22 +9,43 @@ $fil=$movie->idFilm(1);
 header('Content-Type: application/json');
 echo json_encode($fil);
 
+//add movie
 
-//$add=$movie->addMovie("Interstellar", "Une équipe d'explorateurs voyage...", 169, 2014, "Drame / SF", "Christopher Nolan");
-//$film=$movie->film();
-//echo "<pre>";
-//print_r($film);
-//echo "</pre>";
+//$nouveauFilm = new movie();
+//$nouveauFilm->setTitle("Inception");
+//$nouveauFilm->setDescription("Dom Cobb est un extracteur...");
+//$nouveauFilm->setDuration(148);
+//$nouveauFilm->setReleaseYear(2010);
+//$nouveauFilm->setGenre("Science-Fiction");
+//$nouveauFilm->setDirector("Christopher Nolan");
 
-//$movie->deleteMovie(6);
-//$film = $movie->film();
-//echo "<pre>";
-//print_r($film);
-//echo "</pre>";
+//$movie->addMovie($nouveauFilm);
 
-//$movie->uploadMovie("Inception - Version Longue", "Un film sur les rêves", 180, 2010, "SF", "Christopher Nolan", 1);
-//$li = $movie->film();
-//echo "<pre>";
-//print_r($li);
-//echo "</pre>";
+//echo "Le film a été enregistré avec l'ID : " . $nouveauFilm->getId();
 
+// upload movie
+
+//$filmAModifier = $movie->idFilm(7);
+
+//$filmAModifier->setTitle("Nouveau Titre Trop Cool");
+
+//$movie->uploadMovie($filmAModifier);
+
+
+// delete movie 
+
+$idASupprimer = 7;
+
+$film = $movie->idFilm($idASupprimer);
+
+if ($film) {
+    $success = $movie->deleteMovie($film);
+    
+    if ($success) {
+        echo json_encode(["message" => "Le film a bien été supprimé."]);
+    } else {
+        echo json_encode(["message" => "Erreur lors de la suppression."]);
+    }
+} else {
+    echo json_encode(["message" => "Ce film n'existe pas."]);
+}

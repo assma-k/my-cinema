@@ -58,4 +58,40 @@ class movie implements JsonSerializable {
     public function setUpdatedAt($updated_at){
         $this->updated_at = $updated_at;
     }
+
+    public function getId() {
+    return $this->id;
+}
+
+public function getTitle() {
+    return $this->title;
+}
+
+public function getDescription() {
+        return $this->description;
+    }
+
+    public function getDuration() {
+        return $this->duration;
+    }
+
+    public function getReleaseYear() {
+        return $this->release_year;
+    }
+
+    public function getGenre() {
+        return $this->genre;
+    }
+
+    public function getDirector() {
+        return $this->director;
+    }
+
+    public function getCreatedAt() {
+        return $this->created_at;
+    }
+
+    public function getUpdatedAt() {
+        return $this->updated_at;
+    }
 }
