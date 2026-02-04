@@ -23,5 +23,36 @@ class screeningRepository{
         return $screening;
     }
 
-    public function
+    public function addScreening($r) {
+        $sql = "INSERT INTO screenings (movie_id, room_id, start_time, created_at) VALUE (?, ?, ?, ?";
+        $result = $this->db->prepare($sql);
+        $result->execute([
+            $r->getMovieId(),
+            $r->getRoomId(),
+            $r->getStartTime(),
+            $r->getCreatedAt()
+        ]);
+        $id = $this->db->lastInsertId();
+        $r->setId($id);
+        return $r;
+    }
+
+    public function updateScreening($r){
+        $sql = "UPDATE screenings SET movie_id = ?, room_id = ?, start_time = ? WHERE id = ?";
+        $result = $this->db->prepare($sql);
+        $result->execute([
+            $r->getMovieId(),
+            $r->getRoomId(),
+            $r->getStartTime()
+        ]);
+
+        return $r;
+    }
+
+    public function deleteScreening($r) {
+        $sql = "DELETE FROM screenings WHERE id = ?";
+        $result = $this->db->prepare($sql);
+        $result->execute([$r->getId()]);
+        return $r;
+    }
 }
