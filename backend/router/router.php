@@ -1,6 +1,8 @@
 <?php
 require("autoload.php");
 
+class RouterException extends Exception {}
+
 class router {
     private $url;
     private $routes;
