@@ -8,6 +8,7 @@ spl_autoload_register(function ($class) {
         __DIR__ . '/Helper/',
         __DIR__ . '/Config/',
         __DIR__ . '/repositories/',
+        __DIR__ . '/router/',
     ];
 
     foreach ($directories as $directory) {
