@@ -26,11 +26,11 @@ class route
         return true;
     }
 
-    public function call()
+    public function call($db)
     {
         if (is_string($this->callable)) {
             $cont = strtok($this->callable, "@");
-            $controller = new $cont();
+            $controller = new $cont($db);
             $meth = strtok("@");
             return call_user_func_array([$controller, $meth], $this->matches);
         }

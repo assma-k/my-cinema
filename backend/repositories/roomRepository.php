@@ -27,6 +27,21 @@ class roomRepository
         return $room;
     }
 
+    public function idRoom($id)
+   {
+      $sql = "SELECT * FROM rooms WHERE id = ?";
+      $result = $this->db->prepare($sql);
+      $result->execute([$id]);
+      $row = $result->fetch(PDO::FETCH_ASSOC);
+       $r = new room();
+        $r->setName($row["name"]);
+        $r->setCapacity($row["capacity"]);
+        $r->setType($row["type"]);
+        $r->setActive($row["active"]);
+        $r->setCreatedAt($row["created_at"]);
+      return $r;
+   }
+
     public function addRoom($r)
     {
         $sql = "INSERT INTO rooms (name, capacity, type, active, created_at) VALUES (?, ?, ?, ?, ?)";

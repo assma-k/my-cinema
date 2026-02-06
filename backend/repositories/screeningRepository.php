@@ -23,6 +23,21 @@ class screeningRepository{
         return $screening;
     }
 
+    public function idScreen($id)
+   {
+      $sql = "SELECT * FROM screenings WHERE id = ?";
+      $result = $this->db->prepare($sql);
+      $result->execute([$id]);
+      $row = $result->fetch(PDO::FETCH_ASSOC);
+       $s = new screening();
+        $s->setId($row["id"]);
+        $s->setMovieId($row["movie_id"]);
+        $s->setRoomId($row["room_id"]);
+        $s->setStartTime($row["start_time"]);
+        $s->setCreatedAt($row["created_at"]);
+      return $s;
+   }
+
     public function addScreening($r) {
         $sql = "INSERT INTO screenings (movie_id, room_id, start_time, created_at) VALUE (?, ?, ?, ?";
         $result = $this->db->prepare($sql);

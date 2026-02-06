@@ -7,10 +7,12 @@ class router
 {
     private $url;
     private $routes;
+    private $db;
 
-    public function __construct($url)
+    public function __construct($url, $db)
     {
         $this->url = $url;
+        $this->db = $db;
     }
 
     public function get($path, $callable)
@@ -19,9 +21,11 @@ class router
         $this->routes["GET"][] = $routes;
         return $routes;
     }
-    public function post($path, $action)
+    public function post($path, $callable)
     {
-        $this->routes['POST'][$path] = $action;
+        $routes = new route($path, $callable);
+        $this->routes['POST'][] = $routes;
+        return $routes;
     }
 
     public function run()
@@ -31,7 +35,7 @@ class router
         }
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
             if ($route->match($this->url)) {
-                return $route->call();
+                return $route->call($this->db);
             }
         }
         throw new RouterException('No matching routes');
