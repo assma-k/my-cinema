@@ -36,6 +36,7 @@ class screeningController
         $s->setMovieId($data->movie_id);
         $s->setRoomId($data->room_id);
         $s->setStartTime($data->start_time);
+        $s->setCreatedAt($data->created_at);
 
         $repo = new screeningRepository($this->db);
         $repo->addScreening($s);

@@ -39,7 +39,7 @@ class screeningRepository{
    }
 
     public function addScreening($r) {
-        $sql = "INSERT INTO screenings (movie_id, room_id, start_time, created_at) VALUE (?, ?, ?, ?";
+        $sql = "INSERT INTO screenings (movie_id, room_id, start_time, created_at) VALUES (?, ?, ?, ?)";
         $result = $this->db->prepare($sql);
         $result->execute([
             $r->getMovieId(),
