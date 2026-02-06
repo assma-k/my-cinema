@@ -13,14 +13,14 @@ $router->post("/movie/update/:id", "movieController@update");
 $router->get("/movie/delete/:id", "movieController@delete");
 
 $router->get("/rooms", "roomController@index");
-$router->post("/room/add", "roomController@store");
+$router->post("/room/add", "roomController@add");
 $router->get("/room/:id", "screeningController@show");
 $router->post("/room/update/:id", "roomController@update");
 $router->get("/room/delete/:id", "roomController@delete");
 
 $router->get("/screenings", "screeningController@index");
 $router->get("/screenings/:id", "screeningController@show");
-$router->post("/screening/add", "screeningController@store");
+$router->post("/screening/add", "screeningController@add");
 $router->post("/screening/update/:id", "screeningController@update");
 $router->get("/screening/delete/:id", "screeningController@delete");
 $router->run();

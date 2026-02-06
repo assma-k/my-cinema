@@ -34,6 +34,7 @@ class roomRepository
       $result->execute([$id]);
       $row = $result->fetch(PDO::FETCH_ASSOC);
        $r = new room();
+       $r->setId($row['id']);
         $r->setName($row["name"]);
         $r->setCapacity($row["capacity"]);
         $r->setType($row["type"]);

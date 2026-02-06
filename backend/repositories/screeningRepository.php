@@ -1,6 +1,7 @@
 <?php
 class screeningRepository{
     private $db;
+    
 
     public function __construct($connexion)
     {
@@ -70,4 +71,5 @@ class screeningRepository{
         $result->execute([$r->getId()]);
         return $r;
     }
+    
 }
