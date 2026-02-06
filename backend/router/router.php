@@ -3,31 +3,37 @@ require("autoload.php");
 
 class RouterException extends Exception {}
 
-class router {
+class router
+{
     private $url;
     private $routes;
 
     public function __construct($url)
     {
-        $this->url =$url;
+        $this->url = $url;
     }
 
     public function get($path, $callable)
     {
-       $routes = new route($path, $callable);
-       $this->routes["GET"][] = $routes;
-       return $routes;
+        $routes = new route($path, $callable);
+        $this->routes["GET"][] = $routes;
+        return $routes;
+    }
+    public function post($path, $action)
+    {
+        $this->routes['POST'][$path] = $action;
     }
 
-    public function run(){
-    if(!isset($this->routes[$_SERVER['REQUEST_METHOD']])){
-        throw new RouterException('REQUEST_METHOD does not exist');
-    }
-    foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route){
-        if($route->match($this->url)){
-            return $route->call();
+    public function run()
+    {
+        if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
+            throw new RouterException('REQUEST_METHOD does not exist');
         }
+        foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+            if ($route->match($this->url)) {
+                return $route->call();
+            }
+        }
+        throw new RouterException('No matching routes');
     }
-    throw new RouterException('No matching routes');
-}
 }
