@@ -8,6 +8,50 @@ class screeningRepository{
         $this->db = $connexion;
     }
 
+    public function hasConflict($movieId, $roomId, $startTime, $excludeScreeningId = null) {
+        $sqlMovie = "SELECT duration FROM movies WHERE id = ?";
+        $stmtMovie = $this->db->prepare($sqlMovie);
+        $stmtMovie->execute([$movieId]);
+        $movieData = $stmtMovie->fetch(PDO::FETCH_ASSOC);
+
+        if (!$movieData || !$movieData['duration']) {
+            throw new Exception('Film not found or has no duration');
+        }
+
+        $startDateTime = new DateTime($startTime);
+        $endDateTime = clone $startDateTime;
+        $endDateTime->modify('+' . (int)$movieData['duration'] . ' minutes');
+
+        $sql = "SELECT s.id, s.start_time, m.duration 
+                FROM screenings s
+                JOIN movies m ON s.movie_id = m.id
+                WHERE s.room_id = ? 
+                AND s.active = true
+                AND (
+                    (s.start_time < ? AND DATE_ADD(s.start_time, INTERVAL m.duration MINUTE) > ?)
+                    OR (s.start_time >= ? AND s.start_time < ?)
+                )";
+
+                $params = [
+            $roomId,
+            $endDateTime->format('Y-m-d H:i:s'),
+            $startDateTime->format('Y-m-d H:i:s'),
+            $startDateTime->format('Y-m-d H:i:s'),
+            $endDateTime->format('Y-m-d H:i:s')
+        ];
+
+         if ($excludeScreeningId) {
+            $sql .= " AND s.id != ?";
+            $params[] = $excludeScreeningId;
+        }
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->rowCount() > 0;
+    }
+    
+
     public function screeningAll(){
         $sql = "SELECT * FROM screenings";
         $result = $this->db->query($sql);
@@ -63,6 +107,13 @@ class screeningRepository{
         ]);
 
         return $r;
+    }
+
+    public function softDeleteScreening($id)
+    {
+        $sql = "UPDATE screenings SET active = false WHERE id = ?";
+        $result = $this->db->prepare($sql);
+        return $result->execute([$id]);
     }
 
     public function deleteScreening($r) {
