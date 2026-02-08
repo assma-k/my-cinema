@@ -1,16 +1,17 @@
 <?php
-class screeningRepository{
+class screeningRepository
+{
     private $db;
-    
+
 
     public function __construct($connexion)
     {
         $this->db = $connexion;
     }
 
-    public function hasConflict($movieId, $roomId, $startTime, $excludeScreeningId = null) {
-        $sqlMovie = "SELECT duration FROM movies WHERE id = ?";
-        $stmtMovie = $this->db->prepare($sqlMovie);
+    public function hasConflict($movieId, $roomId, $startTime, $excludeScreeningId = null)
+    {
+        $stmtMovie = $this->db->prepare("SELECT duration FROM movies WHERE id = ?");
         $stmtMovie->execute([$movieId]);
         $movieData = $stmtMovie->fetch(PDO::FETCH_ASSOC);
 
@@ -18,46 +19,35 @@ class screeningRepository{
             throw new Exception('Film not found or has no duration');
         }
 
-        $startDateTime = new DateTime($startTime);
-        $endDateTime = clone $startDateTime;
-        $endDateTime->modify('+' . (int)$movieData['duration'] . ' minutes');
+        $sql = "SELECT COUNT(*) as count FROM screenings s
+            JOIN movies m ON s.movie_id = m.id
+            WHERE s.room_id = ? 
+            AND s.active = true
+            AND s.start_time < DATE_ADD(?, INTERVAL ? MINUTE)
+            AND DATE_ADD(s.start_time, INTERVAL m.duration MINUTE) > ?";
 
-        $sql = "SELECT s.id, s.start_time, m.duration 
-                FROM screenings s
-                JOIN movies m ON s.movie_id = m.id
-                WHERE s.room_id = ? 
-                AND s.active = true
-                AND (
-                    (s.start_time < ? AND DATE_ADD(s.start_time, INTERVAL m.duration MINUTE) > ?)
-                    OR (s.start_time >= ? AND s.start_time < ?)
-                )";
+        $params = [$roomId, $startTime, $movieData['duration'], $startTime];
 
-                $params = [
-            $roomId,
-            $endDateTime->format('Y-m-d H:i:s'),
-            $startDateTime->format('Y-m-d H:i:s'),
-            $startDateTime->format('Y-m-d H:i:s'),
-            $endDateTime->format('Y-m-d H:i:s')
-        ];
-
-         if ($excludeScreeningId) {
+        if ($excludeScreeningId) {
             $sql .= " AND s.id != ?";
             $params[] = $excludeScreeningId;
         }
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $stmt->rowCount() > 0;
+        return $result['count'] > 0;
     }
-    
 
-    public function screeningAll(){
-        $sql = "SELECT * FROM screenings";
+
+    public function screeningAll()
+    {
+        $sql = "SELECT * FROM screenings WHERE active = true";
         $result = $this->db->query($sql);
         $screening = [];
 
-        while($row = $result->fetch()) {
+        while ($row = $result->fetch()) {
             $s = new screening();
             $s->setMovieId($row["movie_id"]);
             $s->setRoomId($row["room_id"]);
@@ -69,21 +59,22 @@ class screeningRepository{
     }
 
     public function idScreen($id)
-   {
-      $sql = "SELECT * FROM screenings WHERE id = ?";
-      $result = $this->db->prepare($sql);
-      $result->execute([$id]);
-      $row = $result->fetch(PDO::FETCH_ASSOC);
-       $s = new screening();
+    {
+        $sql = "SELECT * FROM screenings WHERE id = ?";
+        $result = $this->db->prepare($sql);
+        $result->execute([$id]);
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        $s = new screening();
         $s->setId($row["id"]);
         $s->setMovieId($row["movie_id"]);
         $s->setRoomId($row["room_id"]);
         $s->setStartTime($row["start_time"]);
         $s->setCreatedAt($row["created_at"]);
-      return $s;
-   }
+        return $s;
+    }
 
-    public function addScreening($r) {
+    public function addScreening($r)
+    {
         $sql = "INSERT INTO screenings (movie_id, room_id, start_time, created_at) VALUES (?, ?, ?, ?)";
         $result = $this->db->prepare($sql);
         $result->execute([
@@ -97,7 +88,8 @@ class screeningRepository{
         return $r;
     }
 
-    public function updateScreening($r){
+    public function updateScreening($r)
+    {
         $sql = "UPDATE screenings SET movie_id = ?, room_id = ?, start_time = ? WHERE id = ?";
         $result = $this->db->prepare($sql);
         $result->execute([
@@ -116,11 +108,11 @@ class screeningRepository{
         return $result->execute([$id]);
     }
 
-    public function deleteScreening($r) {
+    public function deleteScreening($r)
+    {
         $sql = "DELETE FROM screenings WHERE id = ?";
         $result = $this->db->prepare($sql);
         $result->execute([$r->getId()]);
         return $r;
     }
-    
 }

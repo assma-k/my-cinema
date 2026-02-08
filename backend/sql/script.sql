@@ -20,7 +20,7 @@ create TABLE rooms (
     name varchar(200) not null,
     capacity int not null,
     type varchar(100),
-  active boolean ,
+  active boolean DEFAULT true,
   created_at datetime,
   updated_at datetime
 );
@@ -30,5 +30,6 @@ CREATE TABLE screenings (
   movie_id int not null REFERENCES movies(id),
   room_id int not null REFERENCES rooms(id),
   start_time datetime not null,
+  active boolean DEFAULT true,
   created_at datetime
 );
