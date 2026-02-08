@@ -4,7 +4,11 @@ require("autoload.php");
 $db = new Databases();
 $pdo = $db->Connexion();
 
-$url = $_GET["url"] ?? "/";
+$url = $_SERVER["PATH_INFO"] ?? $_GET["url"] ?? "/";
+error_log("URL reçue : " . $url);
+error_log("PATH_INFO : " . ($_SERVER["PATH_INFO"] ?? "vide"));
+error_log("GET url : " . ($_GET["url"] ?? "vide"));
+
 $router = new router($url, $pdo);
 $router->get("/movie", "movieController@index");
 $router->get("/movie/:id", "movieController@show");
@@ -14,7 +18,7 @@ $router->get("/movie/delete/:id", "movieController@delete");
 
 $router->get("/rooms", "roomController@index");
 $router->post("/room/add", "roomController@add");
-$router->get("/room/:id", "screeningController@show");
+$router->get("/room/:id", "roomController@show");
 $router->post("/room/update/:id", "roomController@update");
 $router->get("/room/delete/:id", "roomController@delete");
 

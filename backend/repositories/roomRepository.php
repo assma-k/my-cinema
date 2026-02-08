@@ -20,8 +20,8 @@ class roomRepository
             $r->setCapacity($row['capacity']);
             $r->setType($row['type']);
             $r->setActive($row['active']);
-            $r->setCreatedAt($row['created_at']);
-            $r->setUpdatedAt($row['updated_at']);
+            $r->setCreatedAt($row['created_at']?? null);
+            $r->setUpdatedAt($row['updated_at']?? null);
             $room[] = $r;
         }
         return $room;

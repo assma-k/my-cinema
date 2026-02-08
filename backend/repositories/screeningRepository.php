@@ -51,9 +51,8 @@ class screeningRepository
             $s = new screening();
             $s->setMovieId($row["movie_id"]);
             $s->setRoomId($row["room_id"]);
-            $s->setStartTime($row["start_time"]);
-            $s->setCreatedAt($row["created_at"]);
-            $screening[] = $s;
+            $s->setStartTime($row["start_time"]?? null);
+            $s->setCreatedAt($row["created_at"]?? null);
         }
         return $screening;
     }

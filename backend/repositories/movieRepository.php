@@ -42,8 +42,8 @@ class movieRepository
       $monFilm->setReleaseYear($row["release_year"]);
       $monFilm->setGenre($row["genre"]);
       $monFilm->setDirector($row["director"]);
-      $monFilm->setCreatedAt($row["created_at"]);
-      $monFilm->setUpdatedAt($row["updated_at"]);
+      $monFilm->setCreatedAt($row["created_at"]?? null);
+      $monFilm->setUpdatedAt($row["updated_at"]?? null);
       return $monFilm;
    }
    public function addMovie($m){
