@@ -47,7 +47,7 @@ class movieRepository
       return $monFilm;
    }
    public function addMovie($m){
-      $sql = "INSERT INTO movies (title, description, duration, release_year, genre, director) VALUES (?, ?, ?, ?, ?, ?) ";
+      $sql = "INSERT INTO movies (title, description, duration, release_year, genre, director, created_at) VALUES (?, ?, ?, ?, ?,?, ?) ";
       $result = $this->db->prepare($sql);
       
       $result->execute([

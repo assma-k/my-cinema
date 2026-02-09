@@ -37,6 +37,7 @@ async function chargerSeances() {
                     <button class="btn btn-sm btn-warning" onclick="editerSeance(${s.id})">Modifier</button>
                     <button class="btn btn-sm btn-danger" onclick="supprimerSeance(${s.id})">Supprimer</button>
                 </td>
+                 <td>${s.createdAt || s.created_at || '-'}</td>
             </tr>
         `;
     }).join('');

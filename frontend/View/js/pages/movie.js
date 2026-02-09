@@ -18,6 +18,8 @@ async function chargerFilms() {
                 <button class="btn btn-sm btn-warning" onclick="editerFilm(${f.id})">Modifier</button>
                 <button class="btn btn-sm btn-danger" onclick="supprimerFilm(${f.id})">Supprimer</button>
             </td>
+            <td>${f.createdAt || f.created_at || '-'}</td>
+            <td>${f.updatedAt || f.updated_at || '-'}</td>
         </tr>
     `).join('');
 }
@@ -31,7 +33,7 @@ document.getElementById('movieForm').addEventListener('submit', async (e) => {
         duration: parseInt(document.getElementById('duration').value),
         release_year: parseInt(document.getElementById('release_year').value),
         genre: document.getElementById('genre').value,
-        director: document.getElementById('director').value
+        director: document.getElementById('director').value,
     };
 
     if (id) {

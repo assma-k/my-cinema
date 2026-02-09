@@ -17,6 +17,8 @@ async function chargerSalles() {
                 <button class="btn btn-sm btn-warning" onclick="editerSalle(${s.id})">Modifier</button>
                 <button class="btn btn-sm btn-danger" onclick="supprimerSalle(${s.id})">Supprimer</button>
             </td>
+             <td>${s.createdAt || s.created_at || '-'}</td>
+            <td>${s.updatedAt || s.updated_at || '-'}</td>
         </tr>
     `).join('');
 }

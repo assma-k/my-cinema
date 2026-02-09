@@ -95,7 +95,6 @@ class screeningRepository
             $r->getMovieId(),
             $r->getRoomId(),
             $r->getStartTime(),
-            $r->getUpdatedAt()
         ]);
 
         return $r;
