@@ -61,7 +61,7 @@ class roomRepository
 
     public function updateRoom($r)
     {
-        $sql = "UPDATE rooms SET name = ?, capacity = ?, type = ?, active = ? WHERE id = ?";
+        $sql = "UPDATE rooms SET name = ?, capacity = ?, type = ?, active = ?, updated_at = ? WHERE id = ?";
         $result = $this->db->prepare($sql);
         $result->execute([
             $r->getName(),

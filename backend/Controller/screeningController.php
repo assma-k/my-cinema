@@ -29,7 +29,7 @@ class screeningController
         }
     }
 
-    public function add($s)
+    public function add()
     {
         $data = json_decode(file_get_contents('php://input'));
         $s = new screening();

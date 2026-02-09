@@ -29,7 +29,7 @@ class movieController
         }
     }
 
-    public function add($m)
+    public function add()
     {
         $data = json_decode(file_get_contents('php://input'));
         $m = new movie();

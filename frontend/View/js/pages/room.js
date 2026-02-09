@@ -1,9 +1,9 @@
 async function chargerSalles() {
-    const reponse = await api.get('/backend/index.php');
+    const reponse = await api.get('/room');
     const salles = reponse.data || reponse;
 
     if (!salles.length) {
-        document.getElementById('roomsBody').innerHTML = '<tr><td colspan="5">Aucune salle</td></tr>';
+        document.getElementById('roomsBody').innerHTML = '<tr><td colspan="7">Aucune salle</td></tr>';
         return;
     }
 
@@ -31,7 +31,7 @@ document.getElementById('roomForm').addEventListener('submit', async (e) => {
         capacity: parseInt(document.getElementById('capacity').value),
         type: document.getElementById('type').value,
         active: true,
-        created_at: maintenant()
+       
     };
 
     if (id) {
@@ -46,7 +46,7 @@ document.getElementById('roomForm').addEventListener('submit', async (e) => {
 });
 
 async function editerSalle(id) {
-    const salle = (await api.get(`/room/${id}`)).data;
+    const salle = (await api.get(`/room/${id}`));
     document.getElementById('roomId').value = salle.id;
     document.getElementById('name').value = salle.name;
     document.getElementById('capacity').value = salle.capacity;

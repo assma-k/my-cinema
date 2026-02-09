@@ -29,7 +29,7 @@ class roomController
         }
     }
 
-    public function add($r)
+    public function add()
     {
         $data = json_decode(file_get_contents('php://input'));
         $r = new room();
@@ -37,7 +37,7 @@ class roomController
         $r->setCapacity($data->capacity);
         $r->setType($data->type);
         $r->setActive($data->active);
-        $r->setCreatedAt($data->created_at);
+        
 
         $repo = new roomRepository($this->db);
         $repo->addRoom($r);

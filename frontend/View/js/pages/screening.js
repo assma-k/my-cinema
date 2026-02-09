@@ -2,10 +2,10 @@ let films = [];
 let salles = [];
 
 async function chargerOptions() {
-    const resFilms = await api.get('/backend/index.php');
+    const resFilms = await api.get('/movie');
     films = resFilms.data || resFilms;
 
-    const resSalles = await api.get('/rooms');
+    const resSalles = await api.get('/room');
     salles = resSalles.data || resSalles;
 
     document.getElementById('movie_id').innerHTML = '<option>Sélectionner...</option>' + 
@@ -16,7 +16,7 @@ async function chargerOptions() {
 }
 
 async function chargerSeances() {
-    const reponse = await api.get('/screenings');
+    const reponse = await api.get('/screening');
     const seances = reponse.data || reponse;
 
     if (!seances.length) {
@@ -46,10 +46,14 @@ async function chargerSeances() {
 document.getElementById('screeningForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const id = document.getElementById('screeningId').value;
+
+    const rawDate = document.getElementById('start_time').value;
+    const dateSQL = rawDate.replace('T', ' ') + ':00';
+
     const data = {
         movie_id: parseInt(document.getElementById('movie_id').value),
         room_id: parseInt(document.getElementById('room_id').value),
-        start_time: convertirSQL(document.getElementById('start_time').value),
+        start_time: dateSQL,
         created_at: maintenant()
     };
 
@@ -65,11 +69,14 @@ document.getElementById('screeningForm').addEventListener('submit', async (e) =>
 });
 
 async function editerSeance(id) {
-    const seance = (await api.get(`/screenings/${id}`)).data;
+    const seance = (await api.get(`/screening/${id}`));
+ 
     document.getElementById('screeningId').value = seance.id;
     document.getElementById('movie_id').value = seance.movie_id;
     document.getElementById('room_id').value = seance.room_id;
-    document.getElementById('start_time').value = convertirInput(seance.start_time);
+    if (seance.start_time) {
+        document.getElementById('start_time').value = seance.start_time.replace(' ', 'T').substring(0, 16);
+    }
 }
 
 async function supprimerSeance(id) {

@@ -6,6 +6,7 @@ class screening implements JsonSerializable
     private $movie_id;
     private $room_id;
     private $start_time;
+    private $active;  
     private $created_at;
 
     public function jsonSerialize(): mixed
@@ -15,6 +16,7 @@ class screening implements JsonSerializable
             "movie_id" => $this->movie_id,
             "room_id" => $this->room_id,
             "start_time" => $this->start_time,
+            "active" => $this->active,
             "created_at" => $this->created_at
         ];
     }
@@ -36,6 +38,10 @@ class screening implements JsonSerializable
     {
         $this->start_time = $start_time;
     }
+
+    public function setActive($active) {
+       $this->active = $active;
+   }
 
     public function setCreatedAt($created_at)
     {
@@ -61,6 +67,10 @@ class screening implements JsonSerializable
     {
         return $this->start_time;
     }
+
+    public function getActive() {
+       return $this->active;
+   }
 
     public function getCreatedAt()
     {

@@ -49,10 +49,13 @@ class screeningRepository
 
         while ($row = $result->fetch()) {
             $s = new screening();
+            $s->setId($row["id"]);
             $s->setMovieId($row["movie_id"]);
             $s->setRoomId($row["room_id"]);
             $s->setStartTime($row["start_time"]?? null);
             $s->setCreatedAt($row["created_at"]?? null);
+
+            $screening[] = $s;
         }
         return $screening;
     }

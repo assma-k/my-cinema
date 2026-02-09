@@ -48,7 +48,7 @@ document.getElementById('movieForm').addEventListener('submit', async (e) => {
 });
 
 async function editerFilm(id) {
-    const film = (await api.get(`/movie/${id}`)).data;
+    const film = (await api.get(`/movie/${id}`));
     document.getElementById('movieId').value = film.id;
     document.getElementById('title').value = film.title;
     document.getElementById('description').value = film.description;

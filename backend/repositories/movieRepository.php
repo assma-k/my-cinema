@@ -73,7 +73,7 @@ class movieRepository
 
    public function uploadMovie($m)
    {
-      $sql = "UPDATE movies SET title = ?, description = ?, duration = ?, release_year = ?, genre = ?, director = ? WHERE id = ?";
+      $sql = "UPDATE movies SET title = ?, description = ?, duration = ?, release_year = ?, genre = ?, director = ?, updated_at= ? WHERE id = ?";
       $result = $this->db->prepare($sql);
       $result->execute([$m->getTitle(),
          $m->getDescription(),
