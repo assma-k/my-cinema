@@ -57,6 +57,7 @@ class movieRepository
       $m->getReleaseYear(),
       $m->getGenre(),
       $m->getDirector(),
+      $m->getCreatedAt(),
       ]);
       $id = $this->db->lastInsertId();
       $m->setId($id);
@@ -80,7 +81,9 @@ class movieRepository
       $m->getReleaseYear(),
       $m->getGenre(),
       $m->getDirector(),
-      $m->getId()]);
+      $m->getId(),
+      $m->getUpdatedAt(),
+      ]);
       return $m;
    }
 }

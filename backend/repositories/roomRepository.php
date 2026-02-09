@@ -68,7 +68,8 @@ class roomRepository
             $r->getCapacity(),
             $r->getType(),
             $r->getActive(),
-            $r->getId()
+            $r->getId(),
+            $r->getUpdatedAt()
         ]);
         return $r;
     }

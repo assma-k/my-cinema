@@ -27,9 +27,11 @@ create TABLE rooms (
 
 CREATE TABLE screenings (
   id int AUTO_INCREMENT PRIMARY KEY,
-  movie_id int not null REFERENCES movies(id),
-  room_id int not null REFERENCES rooms(id),
+  movie_id int not null,
+  room_id int not null,
   start_time datetime not null,
   active boolean DEFAULT true,
-  created_at datetime
+  created_at datetime,
+   FOREIGN KEY(room_id) REFERENCES rooms(id),
+    FOREIGN KEY(movie_id) REFERENCES movies(id)
 );

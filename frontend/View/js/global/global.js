@@ -23,7 +23,7 @@ class API {
   }
 }
 
-const api = new API();
+const api = new API(); 
 
 function viderFormulaire(idFormulaire) {
   document.getElementById(idFormulaire).reset();
