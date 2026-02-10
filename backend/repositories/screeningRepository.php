@@ -98,6 +98,7 @@ class screeningRepository
             $r->getMovieId(),
             $r->getRoomId(),
             $r->getStartTime(),
+            $r->getId(),
         ]);
 
         return $r;

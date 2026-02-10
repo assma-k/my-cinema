@@ -9,7 +9,7 @@ class movieRepository
    }
    public function film()
    {
-      $sql = "SELECT * FROM movies";
+      $sql = "SELECT * FROM movies WHERE active = 1";
       $result = $this->db->query($sql);
       $rows = $result->fetchAll(PDO::FETCH_ASSOC);
       $films = [];
@@ -24,6 +24,7 @@ class movieRepository
          $unfilms->setDirector($row["director"]);
          $unfilms->setCreatedAt($row["created_at"]);
          $unfilms->setUpdatedAt($row["updated_at"]);
+         $unfilms->setActive(1);
          $films[] = $unfilms;
       }
       return $films;
@@ -47,7 +48,7 @@ class movieRepository
       return $monFilm;
    }
    public function addMovie($m){
-      $sql = "INSERT INTO movies (title, description, duration, release_year, genre, director, created_at) VALUES (?, ?, ?, ?, ?,?, ?) ";
+      $sql = "INSERT INTO movies (title, description, duration, release_year, genre, director, created_at, active) VALUES (?, ?, ?, ?, ?,?, ?, ?) ";
       $result = $this->db->prepare($sql);
       
       $result->execute([
@@ -58,6 +59,7 @@ class movieRepository
       $m->getGenre(),
       $m->getDirector(),
       $m->getCreatedAt(),
+      $m->getActive()
       ]);
       $id = $this->db->lastInsertId();
       $m->setId($id);
@@ -71,6 +73,14 @@ class movieRepository
       return $m;
    }
 
+   public function softDeleteMovie($id)
+    {
+        $sql = "UPDATE movies SET active = false WHERE id = ?";
+        $result = $this->db->prepare($sql);
+        return $result->execute([$id]);
+    }
+
+
    public function uploadMovie($m)
    {
       $sql = "UPDATE movies SET title = ?, description = ?, duration = ?, release_year = ?, genre = ?, director = ?, updated_at= ? WHERE id = ?";
@@ -81,8 +91,8 @@ class movieRepository
       $m->getReleaseYear(),
       $m->getGenre(),
       $m->getDirector(),
-      $m->getId(),
       $m->getUpdatedAt(),
+      $m->getId()
       ]);
       return $m;
    }

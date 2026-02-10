@@ -9,6 +9,7 @@ class movie implements JsonSerializable {
     private $director;
     private $created_at;
     private $updated_at; 
+    private $active;  
     
 
     public function jsonSerialize(): mixed{
@@ -59,6 +60,11 @@ class movie implements JsonSerializable {
         $this->updated_at = $updated_at;
     }
 
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
     public function getId() {
     return $this->id;
 }
@@ -94,4 +100,8 @@ public function getDescription() {
     public function getUpdatedAt() {
         return $this->updated_at;
     }
+
+     public function getActive() {
+       return $this->active;
+   }
 }

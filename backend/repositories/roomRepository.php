@@ -68,8 +68,8 @@ class roomRepository
             $r->getCapacity(),
             $r->getType(),
             $r->getActive(),
-            $r->getId(),
-            $r->getUpdatedAt()
+            $r->getUpdatedAt(),
+            $r->getId()
         ]);
         return $r;
     }
@@ -81,4 +81,12 @@ class roomRepository
         $result->execute([$r->getId()]);
         return $r;
     }
+
+    public function softDeleteRoom($id)
+    {
+        $sql = "UPDATE rooms SET active = false WHERE id = ?";
+        $result = $this->db->prepare($sql);
+        return $result->execute([$id]);
+    }
+
 }

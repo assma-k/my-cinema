@@ -15,6 +15,7 @@ class screeningController
 
         header('Content-Type: application/json');
         echo json_encode($screen);
+         exit;
     }
 
     public function show($id)
@@ -24,6 +25,7 @@ class screeningController
         header('Content-Type: application/json');
         if ($screen->getId()) {
             echo json_encode($screen);
+             exit;
         } else {
             http_response_code(404);
         }
@@ -36,12 +38,13 @@ class screeningController
         $s->setMovieId($data->movie_id);
         $s->setRoomId($data->room_id);
         $s->setStartTime($data->start_time);
-        $s->setCreatedAt($data->created_at);
+        $s->setCreatedAt(date('Y-m-d H:i:s'));
 
         $repo = new screeningRepository($this->db);
         $repo->addScreening($s);
         header('Content-Type: application/json');
         echo json_encode($s);
+         exit;
     }
 
     public function update($id)
@@ -56,6 +59,7 @@ class screeningController
         $repo->updateScreening($s);
         header('Content-Type: application/json');
         echo json_encode($s);
+         exit;
     }
 
 
@@ -66,8 +70,9 @@ class screeningController
         $s = $repo->idScreen($id);
         header('Content-Type: application/json');
         if ($s && $s->getId()) {
-            $repo->deleteScreening($s);
-            echo json_encode($s);
+            $repo->softDeleteScreening($s->getId());
+            echo json_encode($s->getId());
+             exit;
         } else {
             http_response_code(404);
         }

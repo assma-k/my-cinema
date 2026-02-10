@@ -46,7 +46,8 @@ document.getElementById('roomForm').addEventListener('submit', async (e) => {
 });
 
 async function editerSalle(id) {
-    const salle = (await api.get(`/room/${id}`));
+    const reponse = (await api.get(`/room/${id}`));
+    const salle = reponse.data || reponse;
     document.getElementById('roomId').value = salle.id;
     document.getElementById('name').value = salle.name;
     document.getElementById('capacity').value = salle.capacity;
