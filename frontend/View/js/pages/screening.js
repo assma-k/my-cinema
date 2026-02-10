@@ -20,7 +20,7 @@ async function chargerSeances() {
     const seances = reponse.data || reponse;
 
     if (!seances.length) {
-        document.getElementById('screeningsBody').innerHTML = '<tr><td colspan="5">Aucune séance</td></tr>';
+        document.getElementById('screeningsBody').innerHTML = '<tr><td colspan="6">Aucune séance</td></tr>';
         return;
     }
 

@@ -9,7 +9,7 @@ class roomRepository
 
     public function roomsAll()
     {
-        $sql = "SELECT * FROM rooms";
+        $sql = "SELECT * FROM rooms WHERE active = 1";
         $result = $this->db->query($sql);
         $room = [];
 

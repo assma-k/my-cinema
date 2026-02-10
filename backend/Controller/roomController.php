@@ -9,14 +9,27 @@ class roomController
     }
 
     public function index()
-    {
-        $repo = new roomRepository($this->db);
-        $rooms = $repo->roomsAll();
+{
+    $repo = new roomRepository($this->db);
+    $rooms = $repo->roomsAll();
+    $data = [];
 
-        header('Content-Type: application/json');
-        echo json_encode($rooms);
-         exit;
+    foreach ($rooms as $r) {
+        $data[] = [
+            "id" => $r->getId(),
+            "name" => $r->getName(),
+            "capacity" => $r->getCapacity(),
+            "type" => $r->getType(),
+            "active" => $r->getActive(),
+            "created_at" => $r->getCreatedAt(),
+            "updated_at" => $r->getUpdatedAt()
+        ];
     }
+
+    header('Content-Type: application/json');
+    echo json_encode($data);
+    exit;
+}
 
     public function show($id)
     {
@@ -53,7 +66,8 @@ class roomController
     {
         $data = json_decode(file_get_contents('php://input'), true); 
 
-        $r = new room();
+        $repo = new roomRepository($this->db);
+        $r = $repo->idRoom($id);
         $r->setId($id);
         $r->setName($data['name']);
         $r->setCapacity($data['capacity']);
