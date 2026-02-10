@@ -71,6 +71,7 @@ class roomController
         if ($r && $r->getId()) {
             $repo->deleteRoom($r);
             echo json_encode($r);
+            exit;
         } else {
             http_response_code(404);
         }

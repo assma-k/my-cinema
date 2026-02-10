@@ -1,6 +1,12 @@
+   function nettoyerTexte(texte) {
+    if (typeof texte !== 'string') return texte;
+    return texte.replace(/<[^>]*>/g, "").trim();
+}
+
 class API {
   constructor(baseUrl = "http://localhost:8000/backend") {
     this.baseUrl = baseUrl;
+
   }
   
   async get(endpoint) {
@@ -11,6 +17,9 @@ class API {
   }
 
   async post(endpoint, data) {
+    for (let cle in data) {
+        data[cle] = nettoyerTexte(data[cle]);
+    }
     const response = await fetch(
       `${this.baseUrl}/index.php?url=${endpoint}`,
       {

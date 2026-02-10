@@ -32,7 +32,7 @@ Accéder à : <http://127.0.0.1:8000/?url=/movie>
 
 ### Salles
 
-- GET /rooms - Lister les salles
+- GET /room - Lister les salles
 - GET /room/:id - Détails d'une salle
 - POST /room/add - Créer une salle
 - POST /room/update/:id - Modifier une salle
@@ -40,7 +40,7 @@ Accéder à : <http://127.0.0.1:8000/?url=/movie>
 
 ### Séances
 
-- GET /screenings - Lister les séances
+- GET /screening - Lister les séances
 - GET /screening/:id - Détails d'une séance
 - POST /screening/add - Créer une séance
 - POST /screening/update/:id - Modifier une séance
